@@ -1,4 +1,6 @@
   import React, {Component} from 'react';
+  import ReactTable from 'react-table';
+  import 'react-table/react-table.css';
 
   const API = 'http://192.168.31.21:8080/networld/list_of_user';
 
@@ -20,12 +22,28 @@
   } 
 
   render() {
-   return (
-    <div>{this.state.data.map((obj) => 
-      <p  key={obj.userId}> {obj.userName} </p>
-      )}</div>
-    );
-  }
+    const data  = this.state.data.map(response =>{ 
+      return {
+        name: response.userName,
+        email: response.userEmail,
+        note: response.userNote
+      }
+    })
+
+  const columns = [{
+    Header: 'User Name',
+    accessor: 'name'
+  }, {
+    Header: 'User Email',
+    accessor: 'email',
+  }, {
+   Header: 'User Note',
+   accessor: 'note'
+ }]
+
+
+ return <ReactTable data={data} columns={columns} />
+}
 
 }
 
